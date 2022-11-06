@@ -11,23 +11,16 @@ datasource db {
 }
 
 model Configuration {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  options   Option[]
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  // optionIDs String[] @db.ObjectId
+  // options  Option[] @relation(fields: [optionIDs], references: [id])
 }
 
 model Option {
-  id              String                 @id @default(uuid()) @map("_id")
-  name            String                 @unique
-  choice          String
-  representation  FrontendRepresentation
-  Configuration   Configuration?         @relation(fields: [configurationId], references: [id])
-  configurationId String?                @db.ObjectId
-}
-
-enum FrontendRepresentation {
-  RADIO
-  SLIDER
-  STRING
+  id               String          @id @default(uuid()) @map("_id") @db.ObjectId
+  choice           String
+  // configurationIDs String[]        @db.ObjectId
+  // configurations   Configuration[] @relation(fields: [configurationIDs], references: [id])
 }
