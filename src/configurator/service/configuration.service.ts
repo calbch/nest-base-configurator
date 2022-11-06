@@ -6,7 +6,26 @@ import { PrismaService } from 'prisma.service';
 export class ConfigurationService {
   constructor(private prisma: PrismaService) {}
 
-  async createConfiguration(data: Prisma.ConfigurationCreateInput) {
-    return this.prisma.configuration.create({ data });
+  // TODO: Fix this type
+  async createConfiguration(options: any) {
+    return this.prisma.configuration.create({
+      data: {
+        options: {
+          create: options,
+        },
+      },
+    });
+  }
+
+  async getConfigurationById(where: Prisma.ConfigurationWhereUniqueInput) {
+    return this.prisma.configuration.findUnique({
+      where,
+    });
+  }
+
+  async deleteConfigurationById(where: Prisma.ConfigurationWhereUniqueInput) {
+    return this.prisma.configuration.delete({
+      where,
+    });
   }
 }
